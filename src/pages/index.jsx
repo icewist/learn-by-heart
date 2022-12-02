@@ -43,87 +43,83 @@ export default function Home() {
 
   return (
     <DefaultLayout>
-      <div>
-        <div>order: {order}</div>
-        <div>length: {words.length}</div>
-        <div>
-          {order < words.length ? (
-            !showAnswer ? (
-              words[order].content.question
-            ) : (
-              words[order].content.answer
-            )
-          ) : (
-            <div>Completed</div>
-          )}
-        </div>
-
-        <div>
-          <button
+      <div className="p-6">
+        <div className="mx-auto my-0">
+          <div
             onClick={() => setShowAnswer(!showAnswer)}
-            className="bg-blue-600 hover:bg-blue-500 text-white rounded px-4 py-2"
+            className="card p-20 shadow-lg rounded-lg border-2"
           >
-            Meaning
-          </button>
-        </div>
+            <p className="text-3xl text-center">
+              {order < words.length ? (
+                !showAnswer ? (
+                  <>{words[order].content.question}</>
+                ) : (
+                  <>{words[order].content.answer}</>
+                )
+              ) : (
+                <>Completed</>
+              )}
+            </p>
+          </div>
 
-        <div className="mt-6">
-          {order < words.length ? (
-            <div>
+          <div className="btns flex justify-between mt-6">
+            {order < words.length ? (
+              <>
+                <button
+                  className="bg-red-600 hover:bg-red-500 text-white rounded-xl p-4 w-[48%]"
+                  onClick={() => nextWord(false, words[order].id)}
+                >
+                  ×
+                </button>
+                <button
+                  className="bg-green-600 hover:bg-green-500 text-white rounded-xl p-4 w-[48%]"
+                  onClick={() => nextWord(true, words[order].id)}
+                >
+                  ◎
+                </button>
+              </>
+            ) : (
               <button
-                className="bg-red-600 hover:bg-red-500 text-white rounded px-4 py-2"
-                onClick={() => nextWord(false, words[order].id)}
+                onClick={restart}
+                className="bg-orange-600 hover:bg-orange-500 text-white rounded-xl p-4 w-full"
               >
-                ×
+                Restart
               </button>
-              <button
-                className="bg-green-600 hover:bg-green-500 text-white rounded px-4 py-2"
-                onClick={() => nextWord(true, words[order].id)}
-              >
-                ◎
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={restart}
-              className="bg-orange-600 hover:bg-orange-500 text-white rounded px-10 py-2"
-            >
-              Restart
-            </button>
-          )}
-        </div>
-
-        <hr />
-
-        <div>
-          {order < words.length ? (
-            <div>
-              {order + 1} / {words.length}
-            </div>
-          ) : null}
-        </div>
-
-        <div className="flex space-x-2">
-          <div>
-            おぼえた
-            {words.map((word) =>
-              word.isCleared ? (
-                <div key={word.id}>
-                  {word.id}: {word.content.question}
-                </div>
-              ) : null
             )}
           </div>
 
+          <hr />
+
           <div>
-            おぼえてない
-            {words.map((word) =>
-              !word.isCleared ? (
-                <div key={word.id}>
-                  {word.id}: {word.content.question}
-                </div>
-              ) : null
-            )}
+            {order < words.length ? (
+              <div>
+                {order + 1} / {words.length}
+              </div>
+            ) : null}
+          </div>
+
+          <div className="flex space-x-2">
+            <div>
+              おぼえた
+              {words.map((word) =>
+                word.isCleared ? (
+                  <div key={word.id}>
+                    {word.id}: {word.content.question}
+                  </div>
+                ) : null
+              )}
+            </div>
+
+            <div>
+              おぼえてない
+              {words.map((word) =>
+                !word.isCleared ? (
+                  <div key={word.id}>
+                    {word.id}: {word.content.question}
+                  </div>
+                ) : null
+              )}
+            </div>
           </div>
         </div>
       </div>
