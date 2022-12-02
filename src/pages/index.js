@@ -13,7 +13,8 @@ const INIT_WORDS = [
 
 export default function Home() {
   const [words, setWords] = useState(INIT_WORDS);
-  const [inputWord, setInputWord] = useState("");
+  const [inputQuestion, setInputQuestion] = useState("");
+  const [inputAnswer, setInputAnswer] = useState("");
   const [uniqueId, setUniqueId] = useState(INIT_WORDS.length);
   const [order, setOrder] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -51,8 +52,6 @@ export default function Home() {
   // 最初から始める
   const restart = () => setOrder(0);
 
-  const turnOverCard = () => setShowAnswer(!showAnswer);
-
   const addWord = () => {
     setWords((prevWords) => {
       const nextUniqueId = uniqueId + 1;
@@ -61,7 +60,7 @@ export default function Home() {
         ...prevWords,
         {
           id: nextUniqueId,
-          content: { en: inputWord, ja: inputWord },
+          content: { question: inputQuestion, answer: inputAnswer },
           isCleared: false,
         },
       ];
@@ -155,10 +154,28 @@ export default function Home() {
 
         <div>
           <div>
-            <input type="text" onChange={(e) => setInputWord(e.target.value)} />
+            問題
+            <input
+              type="text"
+              onChange={(e) => setInputQuestion(e.target.value)}
+              className="border"
+            />
           </div>
           <div>
-            <button onClick={addWord}>追加</button>
+            回答
+            <input
+              type="text"
+              onChange={(e) => setInputAnswer(e.target.value)}
+              className="border"
+            />
+          </div>
+          <div>
+            <button
+              onClick={addWord}
+              className="bg-orange-600 hover:bg-orange-500 text-white rounded px-10 py-2"
+            >
+              追加
+            </button>
           </div>
         </div>
       </div>
