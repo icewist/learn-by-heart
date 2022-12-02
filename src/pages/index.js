@@ -1,10 +1,14 @@
 import DefaultLayout from "components/templates/DefaultLayout";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 const INIT_WORDS = [
-  { id: 1, word: "language", isCleared: false },
-  { id: 2, word: "remind", isCleared: false },
-  { id: 3, word: "English", isCleared: false },
+  {
+    id: 1,
+    content: { question: "language", answer: "言語" },
+    isCleared: false,
+  },
+  { id: 2, content: { question: "book", answer: "本" }, isCleared: false },
+  { id: 3, content: { question: "clothing", answer: "服" }, isCleared: false },
 ];
 
 export default function Home() {
@@ -12,6 +16,7 @@ export default function Home() {
   const [inputWord, setInputWord] = useState("");
   const [uniqueId, setUniqueId] = useState(INIT_WORDS.length);
   const [order, setOrder] = useState(0);
+  const [showAnswer, setShowAnswer] = useState(false);
 
   const nextWord = (isCleared, id) => {
     let updatedWords;
@@ -24,24 +29,29 @@ export default function Home() {
       // 覚えた単語のisClearedをtrueに
       updatedWords = words.map((word) => {
         if (word.id === id && !word.isCleared) {
-          return { id: id, word: word.word, isCleared: true };
+          word.isCleared = true;
+          return word;
         }
         return word;
       });
     } else {
       updatedWords = words.map((word) => {
         if (word.id === id && word.isCleared) {
-          return { id: id, word: word.word, isCleared: false };
+          word.isCleared = false;
+          return word;
         }
         return word;
       });
     }
 
+    setShowAnswer(false);
     setWords(updatedWords);
   };
 
   // 最初から始める
   const restart = () => setOrder(0);
+
+  const turnOverCard = () => setShowAnswer(!showAnswer);
 
   const addWord = () => {
     setWords((prevWords) => {
@@ -49,7 +59,11 @@ export default function Home() {
       setUniqueId(nextUniqueId);
       return [
         ...prevWords,
-        { id: nextUniqueId, word: inputWord, isCleared: false },
+        {
+          id: nextUniqueId,
+          content: { en: inputWord, ja: inputWord },
+          isCleared: false,
+        },
       ];
     });
   };
@@ -59,14 +73,31 @@ export default function Home() {
         <div>order: {order}</div>
         <div>length: {words.length}</div>
         <div>
-          {order < words.length ? words[order].word : <div>Completed</div>}
+          {order < words.length ? (
+            !showAnswer ? (
+              words[order].content.question
+            ) : (
+              words[order].content.answer
+            )
+          ) : (
+            <div>Completed</div>
+          )}
         </div>
 
         <div>
+          <button
+            onClick={() => setShowAnswer(!showAnswer)}
+            className="bg-blue-600 hover:bg-blue-500 text-white rounded px-4 py-2"
+          >
+            Meaning
+          </button>
+        </div>
+
+        <div className="mt-6">
           {order < words.length ? (
             <div>
               <button
-                className="bg-blue-600 hover:bg-blue-500 text-white rounded px-4 py-2"
+                className="bg-red-600 hover:bg-red-500 text-white rounded px-4 py-2"
                 onClick={() => nextWord(false, words[order].id)}
               >
                 ×
@@ -104,7 +135,7 @@ export default function Home() {
             {words.map((word) =>
               word.isCleared ? (
                 <div key={word.id}>
-                  {word.id}: {word.word}
+                  {word.id}: {word.content.question}
                 </div>
               ) : null
             )}
@@ -115,7 +146,7 @@ export default function Home() {
             {words.map((word) =>
               !word.isCleared ? (
                 <div key={word.id}>
-                  {word.id}: {word.word}
+                  {word.id}: {word.content.question}
                 </div>
               ) : null
             )}
