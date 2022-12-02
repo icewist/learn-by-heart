@@ -1,18 +1,10 @@
 import DefaultLayout from "components/templates/DefaultLayout";
+import { useAtom } from "jotai";
 import { useState } from "react";
-
-const INIT_WORDS = [
-  {
-    id: 1,
-    content: { question: "language", answer: "言語" },
-    isCleared: false,
-  },
-  { id: 2, content: { question: "book", answer: "本" }, isCleared: false },
-  { id: 3, content: { question: "clothing", answer: "服" }, isCleared: false },
-];
+import { wordsAtom } from "state/words";
 
 export default function Home() {
-  const [words, setWords] = useState(INIT_WORDS);
+  const [words, setWords] = useAtom(wordsAtom);
   const [order, setOrder] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
 
