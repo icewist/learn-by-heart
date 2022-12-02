@@ -1,11 +1,20 @@
+import Link from "next/link";
 import { useState } from "react";
 
 const DefaultLayout = (props) => {
-  //   const [words, setWords] = useState(["word", "remind", "language"]);
-  //   const [order, setOrder] = useState(0);
   return (
     <div>
-      <header>単語</header>
+      <header>
+        <h1>単語</h1>
+        <div className="flex">
+          <div>
+            <Link href={"/"}>HOME</Link>
+          </div>
+          <div>
+            <Link href={"/update"}>UPDATE</Link>
+          </div>
+        </div>
+      </header>
       {props.children}
     </div>
   );
