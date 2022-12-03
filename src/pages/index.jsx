@@ -61,21 +61,27 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="btns flex justify-between mt-6">
+        <div className="mt-6">
           {order < words.length ? (
             <>
-              <button
-                className="bg-red-600 hover:bg-red-500 text-white rounded-xl p-4 w-[48%]"
-                onClick={() => nextWord(false, words[order].id)}
-              >
-                ×
-              </button>
-              <button
-                className="bg-green-600 hover:bg-green-500 text-white rounded-xl p-4 w-[48%]"
-                onClick={() => nextWord(true, words[order].id)}
-              >
-                ◎
-              </button>
+              <div className="btns flex justify-between">
+                <button
+                  className="bg-red-600 hover:bg-red-500 text-white rounded-xl p-4 w-[48%]"
+                  onClick={() => nextWord(false, words[order].id)}
+                >
+                  ×
+                </button>
+                <button
+                  className="bg-green-600 hover:bg-green-500 text-white rounded-xl p-4 w-[48%]"
+                  onClick={() => nextWord(true, words[order].id)}
+                >
+                  ◎
+                </button>
+              </div>
+
+              <div className="text-xl text-center mt-4">
+                {order + 1} / {words.length}
+              </div>
             </>
           ) : (
             <button
@@ -88,14 +94,6 @@ export default function Home() {
         </div>
 
         <hr />
-
-        <div>
-          {order < words.length ? (
-            <div>
-              {order + 1} / {words.length}
-            </div>
-          ) : null}
-        </div>
 
         <div className="flex space-x-2">
           <div>
