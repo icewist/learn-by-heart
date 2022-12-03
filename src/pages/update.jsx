@@ -29,22 +29,25 @@ const Update = () => {
     <DefaultLayout>
       <div>
         <div>
-          <div>
-            問題
-            <input
-              type="text"
-              onChange={(e) => setInputQuestion(e.target.value)}
-              className="border"
-            />
+          <div className="flex justify-between">
+            <div className="w-[48%]">
+              <input
+                type="text"
+                onChange={(e) => setInputQuestion(e.target.value)}
+                className="w-full text-lg p-2 border-2 rounded-lg"
+                placeholder="Question"
+              />
+            </div>
+            <div className="w-[48%]">
+              <input
+                type="text"
+                onChange={(e) => setInputAnswer(e.target.value)}
+                className="w-full text-lg p-2 border-2 rounded-lg"
+                placeholder="Answer"
+              />
+            </div>
           </div>
-          <div>
-            回答
-            <input
-              type="text"
-              onChange={(e) => setInputAnswer(e.target.value)}
-              className="border"
-            />
-          </div>
+
           <div>
             <button
               onClick={addWord}

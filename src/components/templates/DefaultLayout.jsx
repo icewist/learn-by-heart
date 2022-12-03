@@ -1,21 +1,24 @@
 import Link from "next/link";
-import { useState } from "react";
 
 const DefaultLayout = (props) => {
   return (
-    <div>
-      <header>
+    <div className="max-w-full">
+      <header className="flex justify-between items-center bg-blue-200 p-4">
         <h1>単語</h1>
         <div className="flex">
           <div>
-            <Link href={"/"}>HOME</Link>
+            <Link href={"/"} className="block text-xl mx-2">
+              HOME
+            </Link>
           </div>
           <div>
-            <Link href={"/update"}>UPDATE</Link>
+            <Link href={"/update"} className="block text-xl mx-2">
+              UPDATE
+            </Link>
           </div>
         </div>
       </header>
-      {props.children}
+      <div className="max-w-6xl p-6">{props.children}</div>
     </div>
   );
 };
